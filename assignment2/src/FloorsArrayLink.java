@@ -25,7 +25,7 @@ public class FloorsArrayLink {
 
     public FloorsArrayLink getNext(int i) {
     	FloorsArrayLink next;
-    	if(i<forward.length & i>=1)
+    	if(i<=forward.length & i>=1)
     		next = forward[i-1];
     	else
     		next = null;
@@ -34,21 +34,21 @@ public class FloorsArrayLink {
 
     public FloorsArrayLink getPrev(int i) {
     	FloorsArrayLink prev;
-    	if(i<forward.length & i>=1)
-    		prev = forward[i-1];
+    	if(i<=back.length & i>=1)
+    		prev = back[i-1];
     	else
     		prev = null;
         return prev;
     }
 
     public void setNext(int i, FloorsArrayLink next) {
-        if(i<forward.length & i>=1)
+        if(i<=forward.length & i>=1)
         	forward[i-1] = next;
     }
 
     public void setPrev(int i, FloorsArrayLink prev) {
-    	if(i<back.length & i>=1)
-        	forward[i-1] = prev;
+    	if(i<=back.length & i>=1)
+        	back[i-1] = prev;
     }
 
     public int getArrSize(){

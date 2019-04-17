@@ -27,19 +27,19 @@ public class FloorsArrayList implements DynamicSet {
     	int i=1;
     	FloorsArrayLink current=this.first;
     	while(i<=current.getArrSize()&&current.getNext(i).getKey()<=key)
-    		{
-    			i++;
-    		}
-    	current=current.getNext(i-1);
-    	i=current.getArrSize()-1;
-    	while(current.getKey()<=key)
+    			{
+    				i++;
+    			}
+    	while(i>1)
     	{
-    		if(current.getNext(i).getKey()<=key)
-    			current=current.getNext(i);
-    		else
-    			i--;
+    		current=current.getNext(i-1);
+    		i=1;
+    		while(i<=current.getArrSize()&&current.getNext(i).getKey()<=key)
+			{
+				i++;
+			}
     	}
-      	return current;
+    	return current;
     }
     
     @Override
@@ -48,27 +48,32 @@ public class FloorsArrayList implements DynamicSet {
     	FloorsArrayLink prev=find(key);
     	FloorsArrayLink next=prev.getNext(1);
     	int i=1;
-    	while(i<arrSize)
+    	while(i<=arrSize)
     	{
-    		while(i<=prev.getArrSize()&i<arrSize)
+    		while(i<=prev.getArrSize()&i<=arrSize)
     		{
     			prev.setNext(i,add);
+    			add.setPrev(i,prev);
     			i++;
     		}
-    		prev=prev.getPrev(prev.getArrSize());
+    		if(prev!=first)
+    			prev=prev.getPrev(prev.getArrSize());
     		
     	}
     	i=1;
-    	while(i<arrSize)
+    	while(i<=arrSize)
     	{
-    		while(i<=next.getArrSize()&i<arrSize)
+    		while(i<=next.getArrSize()&i<=arrSize)
     		{
     			next.setPrev(i,add);
+    			add.setNext(i,next);
     			i++;
     		}
-    		next=next.getNext(next.getArrSize());
+    		if(next!=last)
+    			next=next.getNext(next.getArrSize());
     		
     	}
+    	size++;
     }
 
     @Override
@@ -76,9 +81,9 @@ public class FloorsArrayList implements DynamicSet {
     	FloorsArrayLink prev=toRemove.getPrev(1);
     	FloorsArrayLink next=toRemove.getNext(1);
     	int i=1;
-    	while(i<toRemove.getArrSize())
+    	while(i<=toRemove.getArrSize())
     	{
-    		while(i<=prev.getArrSize()&i<toRemove.getArrSize())
+    		while(i<=prev.getArrSize()&i<=toRemove.getArrSize())
     		{
     			prev.setNext(i,toRemove.getNext(i));
     			i++;
@@ -87,9 +92,9 @@ public class FloorsArrayList implements DynamicSet {
     		
     	}
     	i=1;
-    	while(i<toRemove.getArrSize())
+    	while(i<=toRemove.getArrSize())
     	{
-    		while(i<=next.getArrSize()&i<toRemove.getArrSize())
+    		while(i<=next.getArrSize()&i<=toRemove.getArrSize())
     		{
     			next.setPrev(i,toRemove.getPrev(i));
     			i++;
@@ -97,6 +102,7 @@ public class FloorsArrayList implements DynamicSet {
     		next=next.getNext(next.getArrSize());
     		
     	}
+    	size--;
     }
 
     @Override
@@ -109,14 +115,14 @@ public class FloorsArrayList implements DynamicSet {
 
     @Override
     public double successor(FloorsArrayLink link) {
-    	if(link.getNext(1)==last)
+    	if(link==last)
 		return first.getKey();
     return link.getNext(1).getKey();
     }
 
     @Override
     public double predecessor(FloorsArrayLink link) {
-        if(link.getPrev(1)==first)
+        if(link==first)
 			return last.getKey();
         return link.getPrev(1).getKey();
     }
