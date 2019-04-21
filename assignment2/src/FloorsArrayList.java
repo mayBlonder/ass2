@@ -23,7 +23,7 @@ public class FloorsArrayList implements DynamicSet {
     }
     
     
-    private FloorsArrayLink find(double key){
+   /* private FloorsArrayLink find(double key){
     	int i=1;
     	FloorsArrayLink current=this.first;
     	while(i<=current.getArrSize()&&current.getNext(i).getKey()<=key)
@@ -40,6 +40,28 @@ public class FloorsArrayList implements DynamicSet {
 			}
     	}
     	return current;
+    }*/
+    private FloorsArrayLink find(double key){
+    	if(key<this.minimum())
+    		return first;
+    	int i=1;
+    	FloorsArrayLink current=this.first;
+    	while(i<=current.getArrSize()&&current.getNext(i).getKey()<=key)
+		{
+			i++;
+		}
+    	i--;
+    	while(i>0)
+    	{
+    		current=current.getNext(i);
+    		i=current.getArrSize();
+    		while(i>0&&current.getNext(i).getKey()>key)
+    		{
+    			i--;
+    		}
+    	}
+    	return current;
+    	
     }
     
     @Override
@@ -115,14 +137,14 @@ public class FloorsArrayList implements DynamicSet {
 
     @Override
     public double successor(FloorsArrayLink link) {
-    	if(link==last)
+    	if(link.getNext(1)==last)
 		return first.getKey();
     return link.getNext(1).getKey();
     }
 
     @Override
     public double predecessor(FloorsArrayLink link) {
-        if(link==first)
+        if(link.getPrev(1)==first)
 			return last.getKey();
         return link.getPrev(1).getKey();
     }
