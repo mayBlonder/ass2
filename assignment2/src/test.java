@@ -24,11 +24,13 @@ public static void main(String[] args) {
 		while(list.successor(link)!=(Double.NEGATIVE_INFINITY))
 		{
 			System.out.println(link.getKey());
+			System.out.print("prev: ");
 			for(int i=1;i<=link.getArrSize();i++)
 			{
 				System.out.print(link.getPrev(i).getKey()+",");
 			}
 			System.out.println();
+			System.out.print("forward: ");
 			for(int i=1;i<=link.getArrSize();i++)
 			{
 				System.out.print(link.getNext(i).getKey()+",");
